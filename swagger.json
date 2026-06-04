@@ -1,0 +1,213 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Hintro Meeting Intelligence API",
+    "version": "1.0.0",
+    "description": "Complete API documentation for the Hintro Backend Assignment"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:3000",
+      "description": "Local Development Server"
+    }
+  ],
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  },
+  "security": [
+    {
+      "bearerAuth": []
+    }
+  ],
+  "paths": {
+    "/health": {
+      "get": {
+        "summary": "Health check endpoint",
+        "security": [],
+        "responses": {
+          "200": { "description": "API is up and running" }
+        }
+      }
+    },
+    "/api/evaluation": {
+      "get": {
+        "summary": "Candidate evaluation data",
+        "security": [],
+        "responses": {
+          "200": { "description": "Returns candidate details" }
+        }
+      }
+    },
+    "/api/login": {
+      "post": {
+        "summary": "Authenticate user and get JWT",
+        "security": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": { "type": "string", "example": "user@example.com" },
+                  "password": { "type": "string", "example": "password123" }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": { "description": "Successfully authenticated" }
+        }
+      }
+    },
+    "/api/meetings": {
+      "get": {
+        "summary": "List all meetings",
+        "parameters": [
+          { "name": "page", "in": "query", "schema": { "type": "integer" } },
+          { "name": "limit", "in": "query", "schema": { "type": "integer" } }
+        ],
+        "responses": { "200": { "description": "List of meetings" } }
+      },
+      "post": {
+        "summary": "Create a new meeting",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "title": { "type": "string" },
+                  "participants": {
+                    "type": "array",
+                    "items": { "type": "string" }
+                  },
+                  "meetingDate": { "type": "string", "format": "date-time" },
+                  "transcript": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "timestamp": { "type": "string" },
+                        "speaker": { "type": "string" },
+                        "text": { "type": "string" }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": { "description": "Meeting created successfully" }
+        }
+      }
+    },
+    "/api/meetings/{id}": {
+      "get": {
+        "summary": "Get a specific meeting",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": { "200": { "description": "Meeting details" } }
+      }
+    },
+    "/api/meetings/{id}/analyze": {
+      "post": {
+        "summary": "Generate AI-powered insights for a meeting",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": {
+          "200": { "description": "AI Insights generated with citations" }
+        }
+      }
+    },
+    "/api/action-items": {
+      "get": {
+        "summary": "List action items",
+        "parameters": [
+          { "name": "status", "in": "query", "schema": { "type": "string" } },
+          { "name": "assignee", "in": "query", "schema": { "type": "string" } },
+          { "name": "meetingId", "in": "query", "schema": { "type": "string" } }
+        ],
+        "responses": { "200": { "description": "List of action items" } }
+      },
+      "post": {
+        "summary": "Create a new action item",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "meetingId": { "type": "string" },
+                  "task": { "type": "string" },
+                  "assignee": { "type": "string" },
+                  "dueDate": { "type": "string", "format": "date-time" }
+                }
+              }
+            }
+          }
+        },
+        "responses": { "201": { "description": "Action item created" } }
+      }
+    },
+    "/api/action-items/overdue": {
+      "get": {
+        "summary": "Get overdue action items",
+        "responses": { "200": { "description": "List of overdue items" } }
+      }
+    },
+    "/api/action-items/{id}/status": {
+      "patch": {
+        "summary": "Update action item status",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "status": {
+                    "type": "string",
+                    "enum": ["PENDING", "IN PROGRESS", "COMPLETED"]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": { "200": { "description": "Status updated successfully" } }
+      }
+    }
+  }
+}
