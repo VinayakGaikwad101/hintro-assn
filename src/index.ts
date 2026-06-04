@@ -46,11 +46,18 @@ app.get("/health", (req: Request, res: Response) => {
 app.get("/api/evaluation", (req: Request, res: Response) => {
   res.json({
     candidateName: "Vinayak Vishwanath Gaikwad",
-    email: "your.email@example.com", // <-- Remember to update this!
-    repositoryUrl: "https://github.com/your-username/hintro-assignment", // <-- Remember to update this!
-    deployedUrl: "https://your-app-url.onrender.com", // <-- Remember to update this!
+    email: "vinaayakgaikwad@gmail.com",
+    repositoryUrl: "https://github.com/VinayakGaikwad101/hintro-assn.git",
+    deployedUrl: "https://hintro-assn.onrender.com",
     externalIntegration: "Discord Webhook",
-    features: ["Authentication", "AI Analysis", "Reminder Scheduler"],
+    features: [
+      "Authentication",
+      "AI Analysis",
+      "Reminder Scheduler",
+      "Swagger API Documentation",
+      "Global Error Handling",
+      "Pagination & Filtering",
+    ],
   });
 });
 
