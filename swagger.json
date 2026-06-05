@@ -91,7 +91,7 @@
         }
       }
     },
-    "/api/auth/register": {
+    "/api/signup": {
       "post": {
         "summary": "Register a new user",
         "tags": ["Auth"],
@@ -103,7 +103,6 @@
               "schema": {
                 "type": "object",
                 "properties": {
-                  "name": { "type": "string", "example": "John Doe" },
                   "email": { "type": "string", "example": "user@example.com" },
                   "password": { "type": "string", "example": "password123" }
                 }
@@ -123,7 +122,7 @@
         }
       }
     },
-    "/api/auth/login": {
+    "/api/login": {
       "post": {
         "summary": "Authenticate user and get JWT",
         "tags": ["Auth"],
